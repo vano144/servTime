@@ -50,6 +50,7 @@ func input() {
 	}
 }
 
+
 func main() {
 	http.HandleFunc("/time", handler)
 	input()
