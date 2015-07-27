@@ -10,10 +10,11 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	t := time.Now().Local()
-	_, err1 := fmt.Fprintf(w, t.Format("2006-01-02 15:04:05"))
+	const layout = "Jan 2, 2006 at 3:04pm (MST)"
+	t := time.Now()
+	_, err1 := fmt.Fprintf(w, t.UTC().Format(layout))
 	if err1 != nil {
-		log.Fatal("failed to write", err, err1)
+		log.Fatal("failed to write", err1)
 	}
 	defer func() {
 		if x := recover(); x != nil {
@@ -49,7 +50,6 @@ func input() {
 		}
 	}
 }
-
 
 func main() {
 	http.HandleFunc("/time", handler)
