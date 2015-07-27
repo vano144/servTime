@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"regexp"
 	"time"
 )
 
@@ -27,7 +28,10 @@ func input() {
 		fmt.Println("Please input port")
 		_, err2 := fmt.Scanf("%s", &s)
 		if err2 == nil {
-			s = ":" + s
+			k, y := regexp.MatchString("[0-9]", s)
+			if k == true && y == nil {
+				s = ":" + s
+			}
 			if err3 := http.ListenAndServeTLS(s, "cert.pem", "key.pem", nil); err3 != nil {
 				log.Println("failed to start server", err3)
 				continue
@@ -35,8 +39,10 @@ func input() {
 				break
 			}
 		} else {
-			log.Println("problem with input", err2)
-			continue
+			if err3 := http.ListenAndServeTLS(s, "cert.pem", "key.pem", nil); err3 != nil {
+				log.Println("failed to start server", err3)
+				continue
+			}
 		}
 	}
 }
