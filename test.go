@@ -9,9 +9,9 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	const layout = "Jan 2, 2006 at 3:04pm (MST)"
+	const layout = "3:04pm"
 	t := time.Now()
-	if _, err1 := fmt.Fprintf(w, t.UTC().Format(layout)); err1 != nil {
+	if _, err1 := fmt.Fprintln(w, t.UTC().Format(layout)); err1 != nil {
 		log.Fatal("failed to write", err1)
 	}
 }
